@@ -108,23 +108,7 @@ Sync(function *(){
 This will crash the script
 ```javascript
 Sync(function *(){
-	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
-
-	function asyncfunction(item, cb){
-		db.collection.findOne(item).exec(cb)
-	}
-
-	var ids = [{ _id : 0 }, { _id : 1 }, { _id : 2 }]
-	ids.forEach(function(item){
-		var response = yield this.sync(function(cb){ asyncfunction(item, cb) })
-	})
-})
-```
-
-instead do 
-```javascript
-Sync(function *(){
-
+	
 	var self = this
 	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
 
@@ -133,8 +117,24 @@ Sync(function *(){
 	}
 
 	var ids = [{ _id : 0 }, { _id : 1 }, { _id : 2 }]
+	ids.forEach(function(item){
+		var response = yield self.sync(function(cb){ asyncfunction(item, cb) })
+	})
+})
+```
+
+instead do 
+```javascript
+Sync(function *(){
+	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
+
+	function asyncfunction(item, cb){
+		db.collection.findOne(item).exec(cb)
+	}
+
+	var ids = [{ _id : 0 }, { _id : 1 }, { _id : 2 }]
 	for(var i = 0; i < items.legth; i++){
-		var response = yield self.sync(function(cb){ asyncfunction(items[i], cb) })
+		var response = yield this.sync(function(cb){ asyncfunction(items[i], cb) })
 	}
 })
 ```
