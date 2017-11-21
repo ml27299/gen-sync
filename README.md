@@ -1,8 +1,6 @@
 # Introduction
 gen-sync is a simple library that allows you to call any asynchronous function in synchronous way using generators introduced in nodejs 4.X.X and above
 
-# Examples
-
 ## Basic Usage
 ```javascript
 var Sync = require('gen-sync')
@@ -89,7 +87,7 @@ Sync(function *(){
 
 	var response = yield this.sync(function(cb){ asyncfunction(cb) }, true)
 	//execution continues
-	
+
 	//Do Stuff
 
 	console.log(response[0]) //'Error out!'
@@ -101,4 +99,40 @@ Sync(function *(){
 	//execution stops here, "err" event handler is executed 
 })
 ```
+
+## Advanced Usage
+"Yield" is only available in a generator scope, keep this in mind when using in conjuction with conditional loops
+
+This will crash the script
+```javascript
+Sync(function *(){
+	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
+
+	function asyncfunction(item, cb){
+		db.collection.findOne(item).exec(cb)
+	}
+
+	var ids = [{ _id : 0 }, { _id : 1 }, { _id : 2 }]
+	ids.forEach(function(item){
+		var response = yield this.sync(function(cb){ asyncfunction(item, cb) })
+	})
+})
+```
+
+instead do 
+```javascript
+Sync(function *(){
+	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
+
+	function asyncfunction(item, cb){
+		db.collection.findOne(item).exec(cb)
+	}
+
+	var ids = [{ _id : 0 }, { _id : 1 }, { _id : 2 }]
+	for(var i = 0; i < items.legth; i++){
+		var response = yield this.sync(function(cb){ asyncfunction(items[i], cb) })
+	}
+})
+```
+
 
