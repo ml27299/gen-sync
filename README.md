@@ -17,9 +17,9 @@ Sync(function *(){
 	var response = yield this.sync(function(cb){ asyncfunction(cb) })
 	console.log(response[1]) // my response!
 })
-
+```
 Alternatively 
-
+```javascript
 Sync(function *(){
 	
 	var sync = this
