@@ -110,7 +110,7 @@ This will crash the script
 Sync(function *(){
 	
 	var self = this
-	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
+	this.on('err', function(err){ /*Handle error here*/ }) 
 
 	function asyncfunction(item, cb){
 		db.collection.findOne(item).exec(cb)
@@ -126,7 +126,7 @@ Sync(function *(){
 instead do 
 ```javascript
 Sync(function *(){
-	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
+	this.on('err', function(err){ /*Handle error here*/ }) 
 
 	function asyncfunction(item, cb){
 		db.collection.findOne(item).exec(cb)
@@ -144,7 +144,7 @@ Making things syncronous is awesome and can make code much more readable, but wh
 
 ```javascript
 Sync(function *(){
-	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
+	this.on('err', function(err){ /*Handle error here*/ }) 
 
 	var result0, result1, result2
 	function gather(data, index){
@@ -167,7 +167,7 @@ Sync(function *(){
 Alternatively
 ```javascript
 Sync(function *(){
-	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
+	this.on('err', function(err){ /*Handle error here*/ }) 
 
 	var result0, result1, result2
 	this.on('data', function(data, index){
