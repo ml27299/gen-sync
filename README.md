@@ -137,7 +137,7 @@ Sync(function *(){
 })
 ```
 
-### Async in Sync loops
+### Async in Sync
 Making things syncronous is awesome and can make code much more readable, but whats so great about javascript is it asyncronous nature, sometimes we want to run multiple asyncronous functions at the same time, because we don't care what async function finishes first, we just care about when a group of async functions are done executing.
 
 ```javascript
