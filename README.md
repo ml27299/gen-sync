@@ -2,9 +2,9 @@
 gen-sync is a simple library that allows you to call any asynchronous function in synchronous way using generators introduced in nodejs 4.X.X and above
 
 # Examples
-```javascript
 
-# Heading 1 #
+## Heading 2
+```javascript
 var Sync = require('gen-sync')
 
 Sync(function *(){
