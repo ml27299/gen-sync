@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "url": "https://github.com/ml27299/gensync",
   "author": "Macario Lara <ml27299@gmail.com>",
-  "main": "/",
+  "main": "/lib/Sync",
   "license": "MIT",
   "repository": {
     "type": "git",
