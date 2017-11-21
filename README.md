@@ -89,6 +89,9 @@ Sync(function *(){
 
 	var response = yield this.sync(function(cb){ asyncfunction(cb) }, true)
 	//execution continues
+	
+	//Do Stuff
+
 	console.log(response[0]) //'Error out!'
 
 	//this.err also holds the latest error (if any) in the parent "Sync" scope
