@@ -8,7 +8,7 @@ Sync(function *(){
 	this.on('err', function(){ /*Handle error here*/ }) 
 
 	function asyncfunction(cb){
-		setTimeout(function(){ return cb(null, 'my response!') }, 100)
+		setTimeout(function(err){ return cb(null, 'my response!') }, 100)
 	}
 
 	var response = yield this.sync(function(cb){ asyncfunction(cb) })
