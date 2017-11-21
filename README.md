@@ -32,7 +32,7 @@ Sync(function *(){
 })
 
 ```
-## Error Usage
+### Error Handling
 
 ```javascript
 Sync(function *(){
