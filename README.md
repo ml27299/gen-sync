@@ -91,7 +91,8 @@ Sync(function *(){
 	//execution continues
 	console.log(response[0]) //'Error out!'
 
-	console.log(this.err) //this also holds the latest error (if any) in the parent "Sync" scope
+	//this.err also holds the latest error (if any) in the parent "Sync" scope
+	console.log(this.err) //'Error out!' 
 
 	if(response[0]) this.throw(response[0]) //can call this at anytime
 	//execution stops here, "err" event handler is executed 
