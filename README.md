@@ -164,7 +164,29 @@ Sync(function *(){
 	console.log(result2) //results from collection2
 })
 ```
+Alternatively
+```javascript
+Sync(function *(){
+	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
 
+	var result0, result1, result2
+	this.on('data', function(data, index){
+		if(index == 0) result0 = data[1]
+		if(index == 1) result1 = data[1]
+		if(index == 2) result2 = data[1]
+	})
+
+	yield this.async.each([
+		db.collection0.find().exec, 
+		db.collection1.find().exec, 
+		db.collection2.find().exec
+	])
+
+	console.log(result0) //results from collection0
+	console.log(result1) //results from collection1
+	console.log(result2) //results from collection2
+})
+```
 ### process.nextTick
 ```javascript
 Sync(function *(){
