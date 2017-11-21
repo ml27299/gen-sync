@@ -69,7 +69,7 @@ Sync(function *(){
 	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
 
 	function asyncfunction(){
-		setTimeout(function(){ return sync.throw('my response!') }, 100)
+		setTimeout(function(){ return sync.throw('Error out!') }, 100)
 	}
 
 	var response = yield asyncfunction()
