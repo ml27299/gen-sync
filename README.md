@@ -164,9 +164,11 @@ Sync(function *(){
 ```
 
 ### process.nextTick
+```javascript
 Sync(function *(){
 	yield this.nextTick()
 })
+```
 
 https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/
 
