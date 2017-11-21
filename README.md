@@ -101,6 +101,8 @@ Sync(function *(){
 ```
 
 ## Advanced Usage
+
+### Conditional loops
 "Yield" is only available in a generator scope, keep this in mind when using in conjuction with conditional loops
 
 This will crash the script
@@ -134,5 +136,38 @@ Sync(function *(){
 	}
 })
 ```
+
+### Async in Sync loops
+Making things syncronous is awesome and can make code much more readable, but whats so great about javascript is it asyncronous nature, sometimes we want to run multiple asyncronous functions at the same time, because we don't care what async function finishes first, we just care about when a group of async functions are done executing.
+
+```javascript
+Sync(function *(){
+	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
+
+	var result0, result1, result2
+	function gather(data, index){
+		if(index == 0) result0 = data[1]
+		if(index == 1) result1 = data[1]
+		if(index == 2) result2 = data[1]
+	}
+
+	yield this.async.each([
+		db.collection0.find().exec, 
+		db.collection1.find().exec, 
+		db.collection2.find().exec
+	], gather)
+
+	console.log(result0) //results from collection0
+	console.log(result1) //results from collection1
+	console.log(result2) //results from collection2
+})
+```
+
+### process.nextTick
+Sync(function *(){
+	yield this.nextTick()
+})
+
+https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/
 
 
