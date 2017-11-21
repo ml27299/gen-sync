@@ -81,7 +81,7 @@ As you may have noticed, any error that is an instance of the internal "Error" o
 
 ```javascript
 Sync(function *(){
-	this.on('err', function(err){ /*Handle error here*/ }) 
+	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
 
 	function asyncfunction(cb){
 		setTimeout(function(){ return cb(Error('Error out!')) }, 100)
