@@ -90,8 +90,8 @@ Sync(function *(){
 	var response = yield this.sync(function(cb){ asyncfunction(cb) }, true)
 	//execution continues
 	console.log(response[0]) //'Error out!'
-	
-	if(response[0]) this.throw(response[0])
+
+	if(response[0]) this.throw(response[0]) //can call this at anytime
 	//execution stops here, "err" event handler is executed 
 })
 ```
