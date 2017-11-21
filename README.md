@@ -16,7 +16,7 @@ Sync(function *(){
 	console.log(response[1]) // my response!
 })
 
-Alternativly 
+Alternatively 
 
 Sync(function *(){
 	
