@@ -124,6 +124,8 @@ Sync(function *(){
 instead do 
 ```javascript
 Sync(function *(){
+
+	var self = this
 	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
 
 	function asyncfunction(item, cb){
@@ -132,7 +134,7 @@ Sync(function *(){
 
 	var ids = [{ _id : 0 }, { _id : 1 }, { _id : 2 }]
 	for(var i = 0; i < items.legth; i++){
-		var response = yield this.sync(function(cb){ asyncfunction(items[i], cb) })
+		var response = yield self.sync(function(cb){ asyncfunction(items[i], cb) })
 	}
 })
 ```
