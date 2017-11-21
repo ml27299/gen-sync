@@ -91,6 +91,8 @@ Sync(function *(){
 	//execution continues
 	console.log(response[0]) //'Error out!'
 
+	console.log(this.err) //this is the latest error (if any) in the parent "Sync" scope
+
 	if(response[0]) this.throw(response[0]) //can call this at anytime
 	//execution stops here, "err" event handler is executed 
 })
