@@ -3,6 +3,8 @@ gen-sync is a simple library that allows you to call any asynchronous function i
 
 # Examples
 ```javascript
+
+Basic Usage
 var Sync = require('gen-sync')
 
 Sync(function *(){
@@ -30,4 +32,47 @@ Sync(function *(){
 	var response = yield asyncfunction()
 	console.log(response) // my response!
 })
+
+Working with errors
+
+Sync(function *(){
+	this.on('err', function(err){ /*Handle error here*/ }) 
+
+	function asyncfunction(cb){
+		setTimeout(function(){ return cb('Error out!') }, 100)
+	}
+
+	var response = yield this.sync(function(cb){ asyncfunction(cb) })
+	console.log(response[0]) // Error out!
+})
+
+or 
+
+Sync(function *(){
+	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
+
+	function asyncfunction(cb){
+		setTimeout(function(){ return cb(Error('Error out!')) }, 100)
+	}
+
+	var response = yield this.sync(function(cb){ asyncfunction(cb) })
+	//execution stops here, "err" event handler is executed 
+})
+
+Alternatively 
+
+Sync(function *(){
+	
+	var sync = this
+	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
+
+	function asyncfunction(){
+		setTimeout(function(){ return sync.throw('my response!') }, 100)
+	}
+
+	var response = yield asyncfunction()
+	//execution stops here, "err" event handler is executed
+})
+
 ```
+
