@@ -77,3 +77,22 @@ Sync(function *(){
 })
 ```
 
+As you may have noticed, any error that is an instance of the internal "Error" object in nodejs automatically stops the execution of the next line of code in gen-sync. You can go around this behavior by doing
+
+```javascript
+Sync(function *(){
+	this.on('err', function(err){ /*Handle error here*/ }) 
+
+	function asyncfunction(cb){
+		setTimeout(function(){ return cb(Error('Error out!')) }, 100)
+	}
+
+	var response = yield this.sync(function(cb){ asyncfunction(cb) }, true)
+	//execution continues
+	console.log(response[0]) //'Error out!'
+	
+	if(response[0]) this.throw(response[0])
+	//execution stops here, "err" event handler is executed 
+})
+```
+
