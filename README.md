@@ -4,7 +4,7 @@ gen-sync is a simple library that allows you to call any asynchronous function i
 # Examples
 ```javascript
 
-Basic Usage
+## Basic Usage
 var Sync = require('gen-sync')
 
 Sync(function *(){
