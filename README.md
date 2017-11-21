@@ -47,9 +47,9 @@ Sync(function *(){
 	var response = yield this.sync(function(cb){ asyncfunction(cb) })
 	console.log(response[0]) // Error out!
 })
-
+```
 or 
-
+```javascript
 Sync(function *(){
 	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
 
@@ -60,9 +60,9 @@ Sync(function *(){
 	var response = yield this.sync(function(cb){ asyncfunction(cb) })
 	//execution stops here, "err" event handler is executed 
 })
-
+```
 Alternatively 
-
+```javascript
 Sync(function *(){
 	
 	var sync = this
@@ -75,6 +75,5 @@ Sync(function *(){
 	var response = yield asyncfunction()
 	//execution stops here, "err" event handler is executed
 })
-
 ```
 
