@@ -2,13 +2,13 @@
   "name": "gen-sync",
   "description": "Library that makes simple to run asynchronous functions in synchronous manner, using generators.",
   "version": "0.0.1",
-  "url": "https://github.com/ml27299/gensync",
+  "url": "https://github.com/ml27299/gen-sync",
   "author": "Macario Lara <ml27299@gmail.com>",
   "main": "lib/Sync",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ml27299/gensync"
+    "url": "https://github.com/ml27299/gen-sync"
   },
   "engines": {
     "node": ">=4.0.0"
