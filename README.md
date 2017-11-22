@@ -133,8 +133,8 @@ Sync(function *(){
 	}
 
 	var ids = [{ _id : 0 }, { _id : 1 }, { _id : 2 }]
-	for(var i = 0; i < items.legth; i++){
-		var response = yield this.sync(function(cb){ asyncfunction(items[i], cb) })
+	for(var i = 0; i < ids.legth; i++){
+		var response = yield this.sync(function(cb){ asyncfunction(ids[i], cb) })
 	}
 })
 ```
