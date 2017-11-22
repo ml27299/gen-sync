@@ -1,5 +1,5 @@
 # Introduction
-gen-sync is a simple library that allows you to call any asynchronous function in synchronous way using generators introduced in nodejs 4.X.X and above
+gen-sync is a simple library that allows you to call any asynchronous function in a synchronous way using generators introduced in nodejs 4.X.X and above
 
 ## Basic Usage
 ```javascript
@@ -140,7 +140,7 @@ Sync(function *(){
 ```
 
 ### Async in Sync
-Making things syncronous is awesome and can make code much more readable, but whats so great about javascript is it asyncronous nature, sometimes we want to run multiple asyncronous functions at the same time, because we don't care what async function finishes first, we just care about when a group of async functions are done executing.
+Making things synchronous is awesome and can make code much more readable, but what's so great about javascript is it asynchronous nature, sometimes we want to run multiple asynchronous functions at the same time, because we don't care what async function finishes first, we just care when a group of async functions are done executing.
 
 ```javascript
 Sync(function *(){
