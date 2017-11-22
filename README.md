@@ -56,7 +56,7 @@ Sync(function *(){
 	}
 
 	var response = yield this.sync(function(cb){ asyncfunction(cb) })
-	//execution stops here, "err" event handler is executed 
+	//execution stops here, "err" event listener is executed 
 })
 ```
 Alternatively 
@@ -71,7 +71,7 @@ Sync(function *(){
 	}
 
 	var response = yield asyncfunction()
-	//execution stops here, "err" event handler is executed
+	//execution stops here, "err" event listener is executed
 })
 ```
 
@@ -96,7 +96,7 @@ Sync(function *(){
 	console.log(this.err) //'Error out!' 
 
 	if(response[0]) this.throw(response[0]) //can call this at anytime
-	//execution stops here, "err" event handler is executed 
+	//execution stops here, "err" event listener is executed 
 })
 ```
 
