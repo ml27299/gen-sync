@@ -45,14 +45,14 @@ Sync(function *(){
 	var response = yield this.sync(function(cb){ asyncfunction(cb) })
 	console.log(response[0]) // Error out!
 
-	if(response[0]) this.throw(response[0]) 
+	if(response[0]) yield this.throw(response[0]) 
 	//execution stops here, "err" event listener is executed
 
 	/*
 	OR
 	*/
 
-	if(response[0]) this.throw(response[0], true) 
+	if(response[0]) yield this.throw(response[0], true) 
 	//execution continues "err" event listener is executed
 
 	//Do stuff
@@ -107,7 +107,7 @@ Sync(function *(){
 	//this.err also holds the latest error (if any) in the parent "Sync" scope
 	console.log(this.err) //'Error out!' 
 
-	if(response[0]) this.throw(response[0]) //can call this at anytime
+	if(response[0]) yield this.throw(response[0]) //can call this at anytime
 	//execution stops here, "err" event listener is executed 
 })
 ```
