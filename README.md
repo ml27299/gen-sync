@@ -36,7 +36,7 @@ Sync(function *(){
 
 ```javascript
 Sync(function *(){
-	this.on('err', function(err){ /*Handle error here*/ }) 
+	this.on('err', function(err){ console.log(err) /*Error out! (plus error stack trace)*/ }) 
 
 	function asyncfunction(cb){
 		setTimeout(function(){ return cb('Error out!') }, 100)
@@ -44,12 +44,24 @@ Sync(function *(){
 
 	var response = yield this.sync(function(cb){ asyncfunction(cb) })
 	console.log(response[0]) // Error out!
+
+	if(response[0]) this.throw(response[0]) 
+	//execution stops here, "err" event listener is executed
+
+	/*
+	OR
+	*/
+
+	if(response[0]) this.throw(response[0], true) 
+	//execution continues "err" event listener is executed
+
+	//Do stuff
 })
 ```
 or 
 ```javascript
 Sync(function *(){
-	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
+	this.on('err', function(err){ console.log(err) /*Error out! (plus error stack trace)*/ }) 
 
 	function asyncfunction(cb){
 		setTimeout(function(){ return cb(Error('Error out!')) }, 100)
@@ -64,7 +76,7 @@ Alternatively
 Sync(function *(){
 	
 	var sync = this
-	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
+	this.on('err', function(err){ console.log(err) /*Error out! (plus error stack trace)*/ }) 
 
 	function asyncfunction(){
 		setTimeout(function(){ return sync.throw('Error out!') }, 100)
@@ -79,7 +91,7 @@ As you may have noticed, any error that is an instance of the internal "Error" o
 
 ```javascript
 Sync(function *(){
-	this.on('err', function(err){ console.log(err) /*Error out!*/ }) 
+	this.on('err', function(err){ console.log(err) /*Error out! (plus error stack trace)*/ }) 
 
 	function asyncfunction(cb){
 		setTimeout(function(){ return cb(Error('Error out!')) }, 100)
