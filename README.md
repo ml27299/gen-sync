@@ -12,8 +12,18 @@ Sync(function *(){
 		setTimeout(function(){ return cb(null, 'my response!') }, 100)
 	}
 
-	var response = yield this.sync(function(cb){ asyncfunction(cb) })
-	console.log(response[1]) // my response!
+	function asyncfunction2(param, cb){
+		setTimeout(function(){ return cb(null, param) }, 100)
+	}
+
+	var response1 = yield this.sync(function(cb){ asyncfunction(cb) })
+	console.log(response1[1]) // my response!
+
+	// Function.prototype.sync() - argument is gen-sync 'this', returns object { exec : [function] }
+	// Function.prototype.sync().exec() - first argument is 'this' context
+	
+	var response2 = yield asyncfunction2.sync(this).exec(null, 'my response!')
+	console.log(response2[1]) // my response!
 })
 ```
 Alternatively 
@@ -124,7 +134,7 @@ Sync(function *(){
 
 	var ids = [{ _id : 0 }, { _id : 1 }, { _id : 2 }]
 	ids.forEach(function(item){
-		var response = yield self.sync(function(cb){ asyncfunction(item, cb) })
+		var response = yield asyncfunction.sync(this).exec(null, item)
 	})
 })
 ```
