@@ -1,7 +1,7 @@
 {
   "name": "gen-sync",
   "description": "Library that makes simple to run asynchronous functions in synchronous manner, using generators.",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "url": "https://github.com/ml27299/gen-sync",
   "author": "Macario Lara <ml27299@gmail.com>",
   "main": "lib/Sync",
