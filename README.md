@@ -60,7 +60,7 @@ Sync(function *(){
 		setTimeout(function(){ return cb('Error out!') }, 100)
 	}
 
-	var response = yield this.sync(function(cb){ asyncfunction(cb) })
+	var response = yield this.sync(asyncfunction)
 	console.log(response[0]) // Error out! (plus error stack trace)
 
 	if(response[0]) yield this.throw(response[0]) //can call this at anytime
@@ -76,7 +76,7 @@ Sync(function *(){
 		setTimeout(function(){ return cb(Error('Error out!')) }, 100)
 	}
 
-	var response = yield this.sync(function(cb){ asyncfunction(cb) })
+	var response = yield this.sync(asyncfunction)
 	//execution stops here, "err" event listener is executed 
 })
 ```
@@ -106,7 +106,7 @@ Sync(function *(){
 		setTimeout(function(){ return cb(Error('Error out!')) }, 100)
 	}
 
-	var response = yield this.sync(function(cb){ asyncfunction(cb) }, true)
+	var response = yield this.sync(asyncfunction, true)
 	//execution continues
 
 	//Do Stuff
