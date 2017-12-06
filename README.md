@@ -19,9 +19,17 @@ Sync(function *(){
 	var response1 = yield this.sync(function(cb){ asyncfunction(cb) })
 	console.log(response1[1]) // my response!
 
+	var response2 = yield this.sync(function(cb){ asyncfunction2('my response!', cb) })
+	console.log(response2[1]) // my response!
+
+	//OR
+
 	// Function.prototype.sync() - argument is gen-sync 'this', returns object { exec : [function] }
 	// Function.prototype.sync().exec() - first argument is 'this' context
-	
+
+	var response1 = yield asyncfunction.sync(this).exec()
+	console.log(response1[1]) // my response!
+
 	var response2 = yield asyncfunction2.sync(this).exec(null, 'my response!')
 	console.log(response2[1]) // my response!
 })
