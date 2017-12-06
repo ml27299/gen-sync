@@ -16,7 +16,7 @@ Sync(function *(){
 		setTimeout(function(){ return cb(null, param) }, 100)
 	}
 
-	var response1 = yield this.sync(function(cb){ asyncfunction(cb) })
+	var response1 = yield this.sync(asyncfunction)
 	console.log(response1[1]) // my response!
 
 	var response2 = yield this.sync(function(cb){ asyncfunction2('my response!', cb) })
