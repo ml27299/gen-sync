@@ -25,12 +25,12 @@ Sync(function *(){
 	//OR
 
 	// Function.prototype.sync() - argument is gen-sync 'this', returns object { exec : [function] }
-	// Function.prototype.sync().exec() - first argument is 'this' context
+	// Function.prototype.sync().run() - first argument is 'this' context
 
-	var response1 = yield asyncfunction.sync(this).exec()
+	var response1 = yield asyncfunction.sync(this).run()
 	console.log(response1[1]) // my response!
 
-	var response2 = yield asyncfunction2.sync(this).exec(null, 'my response!')
+	var response2 = yield asyncfunction2.sync(this).run(null, 'my response!')
 	console.log(response2[1]) // my response!
 })
 ```
