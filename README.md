@@ -142,7 +142,7 @@ Sync(function *(){
 
 	var ids = [{ _id : 0 }, { _id : 1 }, { _id : 2 }]
 	ids.forEach(function(item){
-		var response = yield asyncfunction.sync(this).exec(null, item)
+		var response = yield asyncfunction.sync(self).exec(null, item)
 	})
 })
 ```
@@ -158,7 +158,7 @@ Sync(function *(){
 
 	var ids = [{ _id : 0 }, { _id : 1 }, { _id : 2 }]
 	for(var i = 0; i < ids.legth; i++){
-		var response = yield this.sync(function(cb){ asyncfunction(ids[i], cb) })
+		var response = yield asyncfunction.sync(this).exec(null, ids[i])
 	}
 })
 ```
