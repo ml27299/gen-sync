@@ -13,6 +13,10 @@
   "keywords": [
     "generator",
     "async",
+    "asynchronous",
+    "synchronous",
+    "sync",
+    "yield",
     "runner",
     "thunk",
     "continuable",
