@@ -10,6 +10,16 @@
     "type": "git",
     "url": "https://github.com/ml27299/gen-sync"
   },
+
+  "keywords": [
+    "generator",
+    "async",
+    "runner",
+    "thunk",
+    "continuable",
+    "callback"
+  ],
+
   "engines": {
     "node": ">=4.0.0"
   },
