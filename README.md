@@ -38,6 +38,7 @@ When an asyncronous function results come in, this event is emitted
 ## .on('end', function(data, index){})
 When all asyncronous functions are complted, this even is emitted
 
+##
 
 ## Basic Usage
 ```javascript
