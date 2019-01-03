@@ -62,11 +62,10 @@ Sync(function *(){
 	console.log(response2[1]) // my response!
 
 	//OR
-		var response2 = yield this.sync(function(cb){ asyncfunction2('my response!', cb) })
-		console.log(response2[1]) // my response!
+	var response2 = yield this.sync(function(cb){ asyncfunction2('my response!', cb) })
+	console.log(response2[1]) // my response!
 
 	//OR
-
 	// Function.prototype.sync() - argument is gen-sync 'this', returns object { run : [function] }
 	// Function.prototype.sync().run() - first argument is 'this' context
 
