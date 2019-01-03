@@ -1,5 +1,41 @@
 # Introduction
-gen-sync is a simple library that allows you to call any asynchronous function in a synchronous way using generators introduced in nodejs 4.X.X and above. This library is lightweight and requires no changes to existing asynchronous functions to use. 
+gen-sync is a simple library that allows you to call any asynchronous function in a synchronous way using generators introduced in nodejs 4.X.X and above. This library is lightweight, non blocking, and requires no changes to existing asynchronous functions to use.
+
+Reference
+---
+
+### Sync
+## sync([function exec], continue, context)
+
+return the response of the asyncronous function
+
+  - `[function exec]`: a function used to execute a target asyncronous function
+  - `continue`: a boolean to determin if the whole Sync process should exit, default is false. When an error occurs an event is triggered, this is where the error is handled. This is the default behavior in gen-sync, if you'd like to overwrite this behavior, set this parameter to true
+  - `context`: this is a class instance used to bind to the target asyncronous function (optional)
+
+## async.each([[function async]], [function gather], continue)
+  - `[[function async]]`: a list of asyncronous functions to run in parallel
+  - `[function gather]`: a function that is executed when the results of one of the async functions returns (optional) 
+  - `continue`: a boolean to determin if the whole Sync process should exit, default is false. When an error occurs an event is triggered, this is where the error is handled. This is the default behavior in gen-sync, if you'd like to overwrite this behavior, set this parameter to true
+
+
+### Function extentions
+This package extends the Function object within a process so that shortcuts can be made
+
+##Function.run(arguments)
+Returns a configured [function exec]
+
+### Sync events
+## .on('err', function(err){})
+When an error occurs within an asyncronous function, the process is stopped and an error is emmitted to this event
+
+### async.each events
+## .on('data', function(data, index){})
+When an asyncronous function results come in, this event is emitted
+
+## .on('end', function(data, index){})
+When all asyncronous functions are complted, this even is emitted
+
 
 ## Basic Usage
 ```javascript
@@ -19,12 +55,16 @@ Sync(function *(){
 	var response1 = yield this.sync(asyncfunction)
 	console.log(response1[1]) // my response!
 
-	var response2 = yield this.sync(function(cb){ asyncfunction2('my response!', cb) })
+	var response2 = yield this.sync(asyncfunction2.run('my response!'))
 	console.log(response2[1]) // my response!
 
 	//OR
+		var response2 = yield this.sync(function(cb){ asyncfunction2('my response!', cb) })
+		console.log(response2[1]) // my response!
 
-	// Function.prototype.sync() - argument is gen-sync 'this', returns object { exec : [function] }
+	//OR
+
+	// Function.prototype.sync() - argument is gen-sync 'this', returns object { run : [function] }
 	// Function.prototype.sync().run() - first argument is 'this' context
 
 	var response1 = yield asyncfunction.sync(this).run()
