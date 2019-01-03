@@ -21,7 +21,7 @@ return the response of the asyncronous function
 ### Function extentions
 This package extends the Function object within a process so that shortcuts can be made
 
-##Function.run(arguments)
+## Function.run(arguments)
 Returns a configured [function exec]
 
 ### Sync events
