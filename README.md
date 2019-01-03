@@ -22,7 +22,10 @@ return the response of the asyncronous function
 This package extends the Function object within a process so that shortcuts can be made
 
 ## Function.run(arguments)
-Returns a configured [function exec]
+returns a configured [function exec]
+
+  - `arguments`: arguments for the asyncronous function
+
 
 ### Sync events
 ## .on('err', function(err){})
