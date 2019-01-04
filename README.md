@@ -1,7 +1,7 @@
 # Introduction
 gen-sync is a simple library that allows you to call any asynchronous function in a synchronous way using generators introduced in nodejs 4.X.X and above. This library is lightweight, non blocking, and requires no changes to existing asynchronous functions to use.
 
-# Sync Reference
+Sync Reference
 ---
 
 ## sync([function run], continue, context)
@@ -27,8 +27,12 @@ used to manually emit an error (see examples below)
 
 ## next(response)
 used to manually trigger the next yield execution (see examples below)
+---
 
-# Function extentions
+
+Function extentions
+---
+
 This package extends the Function object within a process so that shortcuts can be made
 
 ## Function.run(arguments)
