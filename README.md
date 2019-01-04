@@ -4,28 +4,28 @@ gen-sync is a simple library that allows you to call any asynchronous function i
 Sync Reference
 ---
 
-## sync([function run], continue, context)
+### sync([function run], continue, context)
 return the response of the asyncronous function
 
   - `[function run]`: a function used to execute a target asyncronous function
   - `continue`: a boolean to determin if the whole Sync process should exit, default is false. When an error occurs an event is triggered, this is where the error is handled. This is the default behavior in gen-sync, if you'd like to overwrite this behavior, set this parameter to true
   - `context`: this is a class instance used to bind to the target asyncronous function (optional)
 
-## async.each([[function async]], [function gather], continue)
+### async.each([[function async]], [function gather], continue)
   - `[[function async]]`: a list of asyncronous functions to run in parallel
   - `[function gather]`: a function that is executed when the results of one of the async functions returns (optional) 
   - `continue`: a boolean to determin if the whole Sync process should exit, default is false. When an error occurs an event is triggered, this is where the error is handled. This is the default behavior in gen-sync, if you'd like to overwrite this behavior, set this parameter to true
 
-## cb 
+### cb 
 A generic callback you can use in any target asyncronous function, its tied to the current gen-sync instance (see example below)
 
-## throw(err, _continue)
+### throw(err, _continue)
 used to manually emit an error (see examples below)
 
  - `err`: a string or Error instance represtending the error
  - `continue`: a boolean to determin if the whole Sync process should exit, default is false. When an error occurs an event is triggered, this is where the error is handled. This is the default behavior in gen-sync, if you'd like to overwrite this behavior, set this parameter to true
 
-## next(response)
+### next(response)
 used to manually trigger the next yield execution (see examples below)
 
 
