@@ -28,7 +28,7 @@ used to manually emit an error (see examples below)
 ## next(response)
 used to manually trigger the next yield execution (see examples below)
 
-Function extentions
+#Function extentions
 This package extends the Function object within a process so that shortcuts can be made
 
 ## Function.run(arguments)
