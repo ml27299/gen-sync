@@ -61,7 +61,7 @@ When all asyncronous functions are complted, this even is emitted
 
 ##
 
-Basic Usage (Review Error Handeling before getting started)
+Basic Usage (See "Error Handling" before getting started)
 ---
 
 ```javascript
@@ -223,7 +223,7 @@ Sync(funciton *(){
 })
 ```
 
-Error Handeling
+Error Handling
 ---
 
 Errors are handled in multiple ways in gen-sync, the default behavior is to emit the error and stop any further execution of code within the Sync process. The library knows if an error occured if one of the arguments returned from an async function is an instance of the internal "Error" class within nodejs. 
