@@ -194,17 +194,17 @@ Sync(function *(){
 
 	//An alternative way of doing the same thing can look like this
 	var c = new Class()
-	var response = yield this.sync(asyncfunction2.run(), c)
+	var response = yield this.sync(c.method.run(), c)
 	response = response[1]
 
-	console.log(response) //my response!
+	console.log(response) //bar
 
 
 	//An alternative way of doing the same thing can look like this
-	var response = yield this.sync(asyncfunction2, c)
+	var response = yield this.sync(c.method, c)
 	response = response[1]
 
-	console.log(response) //my response!
+	console.log(response) //bar
 })
 ```
 
