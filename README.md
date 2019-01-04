@@ -61,7 +61,8 @@ When all asyncronous functions are complted, this even is emitted
 
 ##
 
-## Basic Usage (Review Error Handeling before getting started)
+Basic Usage (Review Error Handeling before getting started)
+---
 
 ```javascript
 var Sync = require('gen-sync')
