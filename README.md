@@ -68,14 +68,14 @@ Basic Usage (Review Error Handeling before getting started)
 var Sync = require('gen-sync')
 ```
 
-### asyncfunction1.js
+#### asyncfunction1.js
 ```javascript
 function asyncfunction1(cb){
 	setTimeout(function(){ return cb(null, 'my response!') }, 100)
 }
 ```
 
-### index.js
+#### index.js
 ```javascript
 Sync(funciton *(){
 
@@ -94,14 +94,14 @@ Sync(funciton *(){
 })
 ```
 
-### asyncfunction2.js
+#### asyncfunction2.js
 ```javascript
 function asyncfunction2(param, cb){
 	setTimeout(function(){ return cb(null, param) }, 100)
 }
 ```
 
-### index.js
+#### index.js
 ```javascript
 Sync(funciton *(){
 
