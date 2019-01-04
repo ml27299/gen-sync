@@ -127,14 +127,14 @@ Sync(funciton *(){
 })
 ```
 
-### asyncfunction3.js
+#### asyncfunction3.js
 ```javascript
 function asyncfunction2(param1, cb, param2){
 	setTimeout(function(){ return cb(null, param1, param2()) }, 100)
 }
 ```
 
-### index.js
+#### index.js
 ```javascript
 Sync(funciton *(){
 
@@ -170,7 +170,7 @@ Sync(funciton *(){
 })
 ```
 
-### Class.js
+#### Class.js
 ```javascript
 function Class(){
 	if(this instanceof Class == false) new Class()
@@ -223,7 +223,8 @@ Sync(funciton *(){
 })
 ```
 
-## Error Handeling
+Error Handeling
+---
 
 Errors are handled in multiple ways in gen-sync, the default behavior is to emit the error and stop any further execution of code within the Sync process. The library knows if an error occured if one of the arguments returned from an async function is an instance of the internal "Error" class within nodejs. 
 
