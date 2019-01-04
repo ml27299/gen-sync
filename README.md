@@ -4,11 +4,10 @@ gen-sync is a simple library that allows you to call any asynchronous function i
 Sync Reference
 ---
 
-## sync([function exec], continue, context)
-
+## sync([function run], continue, context)
 return the response of the asyncronous function
 
-  - `[function exec]`: a function used to execute a target asyncronous function
+  - `[function run]`: a function used to execute a target asyncronous function
   - `continue`: a boolean to determin if the whole Sync process should exit, default is false. When an error occurs an event is triggered, this is where the error is handled. This is the default behavior in gen-sync, if you'd like to overwrite this behavior, set this parameter to true
   - `context`: this is a class instance used to bind to the target asyncronous function (optional)
 
@@ -17,16 +16,32 @@ return the response of the asyncronous function
   - `[function gather]`: a function that is executed when the results of one of the async functions returns (optional) 
   - `continue`: a boolean to determin if the whole Sync process should exit, default is false. When an error occurs an event is triggered, this is where the error is handled. This is the default behavior in gen-sync, if you'd like to overwrite this behavior, set this parameter to true
 
-## cb
-A generic callback you can use within this.sync() (see example below)
+## cb 
+A generic callback you can use in any target asyncronous function, its tied to the current gen-sync instance (see example below)
+
+## throw(err, _continue)
+used to manually emit an error (see examples below)
+
+ - `err`: a string or Error instance represtending the error
+ - `continue`: a boolean to determin if the whole Sync process should exit, default is false. When an error occurs an event is triggered, this is where the error is handled. This is the default behavior in gen-sync, if you'd like to overwrite this behavior, set this parameter to true
+
+## next(response)
+used to manually trigger the next yield execution (see examples below)
 
 ### Function extentions
 This package extends the Function object within a process so that shortcuts can be made
 
 ## Function.run(arguments)
-returns a configured [function exec]
+returns a configured [function run]
 
   - `arguments`: arguments for the asyncronous function
+
+## [function run] (see examples)
+yield to and execute this function, params can be placed in any order
+
+  - `callback`: a function used to determine the target callback in the target asyncronous function (optional)
+  - `_continue`:  a boolean to determin if the whole Sync process should exit, default is false. When an error occurs an event is triggered, this is where the error is handled. This is the default behavior in gen-sync, if you'd like to overwrite this behavior, set this parameter to true
+  - `context`: this is a class instance used to bind to the target asyncronous function (optional)
 
 ### Sync events
 ## .on('err', function(err){})
@@ -41,133 +56,259 @@ When all asyncronous functions are complted, this even is emitted
 
 ##
 
-## Basic Usage
+## Basic Usage (Review Error Handeling before getting started)
+
 ```javascript
 var Sync = require('gen-sync')
+```
 
-Sync(function *(){
-	this.on('err', function(err){ /*Handle error here*/ }) 
+### asyncfunction1.js
+```javascript
+function asyncfunction1(cb){
+	setTimeout(function(){ return cb(null, 'my response!') }, 100)
+}
+```
 
-	function asyncfunction(cb){
-		setTimeout(function(){ return cb(null, 'my response!') }, 100)
-	}
+### index.js
+```javascript
+Sync(funciton *(){
 
-	function asyncfunction2(param, cb){
-		setTimeout(function(){ return cb(null, param) }, 100)
-	}
+	//since the only argument is the callback, gen-sync will handle it behind the scenes
+	var response = yield asyncfunction1.run()()
+	response = response[1]
 
-	var response1 = yield this.sync(asyncfunction)
-	console.log(response1[1]) // my response!
+	console.log(response) //my response!
+	
 
-	var response2 = yield this.sync(asyncfunction2.run('my response!'))
-	console.log(response2[1]) // my response!
+	//An alternative way of doing the same thing can look like this
+	var response = yield this.sync(asyncfunction1)
+	response = response[1]
 
-	//OR - didnt need this.cb above because asyncfunction2's last param is a callback
-	var response2 = yield this.sync(asyncfunction2.run('my response!', this.cb))
-	console.log(response2[1]) // my response!
-
-	//OR
-	var response2 = yield this.sync(function(cb){ asyncfunction2('my response!', cb) })
-	console.log(response2[1]) // my response!
-
-	//OR
-	// Function.prototype.sync() - argument is gen-sync 'this', returns object { run : [function] }
-	// Function.prototype.sync().run() - first argument is 'this' context
-
-	var response1 = yield asyncfunction.sync(this).run()
-	console.log(response1[1]) // my response!
-
-	var response2 = yield asyncfunction2.sync(this).run(null, 'my response!')
-	console.log(response2[1]) // my response!
+	console.log(response) //my response!
 })
 ```
-Alternatively 
+
+### asyncfunction2.js
 ```javascript
-Sync(function *(){
+function asyncfunction2(param, cb){
+	setTimeout(function(){ return cb(null, param) }, 100)
+}
+```
+
+### index.js
+```javascript
+Sync(funciton *(){
+
+	//since the last argument is the callback, gen-sync will handle it behind the scenes
+	var response = yield asyncfunction2.run('my response!')()
+	response = response[1]
+
+	console.log(response) //my response!
+	
+
+	//An alternative way of doing the same thing can look like this
+	var response = yield this.sync(asyncfunction2.run('my response!'))
+	response = response[1]
+
+	console.log(response) //my response!
+
+
+	//An alternative way of doing the same thing can look like this
+	var response = yield this.sync(function(cb){ asyncfunction2('my response!', cb) })
+	response = response[1]
+
+	console.log(response) //my response!
+})
+```
+
+### asyncfunction3.js
+```javascript
+function asyncfunction2(param1, cb, param2){
+	setTimeout(function(){ return cb(null, param1, param2()) }, 100)
+}
+```
+
+### index.js
+```javascript
+Sync(funciton *(){
+
+	//the this.cb is utilized in this example, it should be the callback of the async function
+	var some_function = function(){ return 'some value!' }
+	var response = yield asyncfunction3.run('my response!', this.cb, some_function)()
+
+	console.log(response[1]) //my response!
+	console.log(response[2]) //some value!
+	
+	//NOTE: within some_function, the "this" parameter has "this._continue", since gen-sync binds another class to all functions passed in the async function. If you'd like to overwrite this behavior pass in the "this.cb" as a parameter when executing the .run function, this will allow gen-sync to figure out what parameter is the real callback, see below
+
+	var some_function = function(){ return 'some value!' }
+	var response = yield asyncfunction3.run('my response!', this.cb, some_function)(this.cb)
+
+	console.log(response[1]) //my response!
+	console.log(response[2]) //some value!
+
+
+	//An alternative way of doing the same thing can look like this
+	var some_function = function(){ return 'some value!' }
+	var response = yield this.sync(asyncfunction3.run('my response!', this.cb, some_function))
+	response = response[1]
+
+	console.log(response[1]) //my response!
+
+
+	//An alternative way of doing the same thing can look like this
+	var response = yield this.sync(function(cb){ asyncfunction3('my response!', cb, some_function) })
+	response = response[1]
+
+	console.log(response) //my response!
+})
+```
+
+### Class.js
+```javascript
+function Class(){
+	if(this instanceof Class == false) new Class()
+	this.foo = 'bar'
+}
+Class.prototype.method = function(cb){
+	setTimeout(function(){ return cb(null, this.foo) }, 100)
+}
+```
+
+```javascript
+Sync(funciton *(){
+
+	//.run messes with inheritance, so pass in the context when needed
+	var c = new Class()
+	var response = yield c.method.run()(c)
+	response = response[1]
+
+	console.log(response) //bar
+	
+
+	//An alternative way of doing the same thing can look like this
+	var c = new Class()
+	var response = yield this.sync(asyncfunction2.run(), c)
+	response = response[1]
+
+	console.log(response) //my response!
+
+
+	//An alternative way of doing the same thing can look like this
+	var response = yield this.sync(asyncfunction2, c)
+	response = response[1]
+
+	console.log(response) //my response!
+})
+```
+
+Manually handle async function with "Sync.next"
+```javascript
+Sync(funciton *(){
 	
 	var sync = this
-	this.on('err', function(err){ /*Handle error here*/ }) 
-
-	function asyncfunction(){
+	function asyncfunction(cb){
 		setTimeout(function(){ return sync.next('my response!') }, 100)
 	}
 
-	var response = yield asyncfunction()
-	console.log(response) // my response!
+	//since the only argument is the callback, gen-sync will handle it behind the scenes
+	var response = yield asyncfunction
+	console.log(response) //my response!
 })
-
 ```
-### Error Handling
+
+## Error Handeling
+
+Errors are handled in multiple ways in gen-sync, the default behavior is to emit the error and stop any further execution of code within the Sync process. The library knows if an error occured if one of the arguments returned from an async function is an instance of the internal "Error" class within nodejs. 
+
+There are ways to overwrite this default behavior to suit ones needs, see below
 
 ```javascript
 Sync(function *(){
-	this.on('err', function(err){ console.log(err) /*Error out! (plus error stack trace)*/ }) 
+
+	this.on('err', function(err){ console.log(err) //my error! })
 
 	function asyncfunction(cb){
-		setTimeout(function(){ return cb('Error out!') }, 100)
+		setTimeout(function(){ return cb(Error('my error!')) }, 100)
 	}
 
-	var response = yield this.sync(asyncfunction)
-	console.log(response[0]) // Error out! (plus error stack trace)
-
-	if(response[0]) yield this.throw(response[0]) //can call this at anytime
-	//execution stops here, "err" event listener is executed
+	var response = yield this.sync(asyncfunction) //this Sync instance exits right here, nothing below this line gets executed
+	response = response[1]
 })
 ```
-or 
+
+To override
 ```javascript
 Sync(function *(){
-	this.on('err', function(err){ console.log(err) /*Error out! (plus error stack trace)*/ }) 
+
+	this.on('err', function(err){ console.log(err) //my error! }) //dont need the event handler, but the error still is emmitted
 
 	function asyncfunction(cb){
-		setTimeout(function(){ return cb(Error('Error out!')) }, 100)
-	}
-
-	var response = yield this.sync(asyncfunction)
-	//execution stops here, "err" event listener is executed 
-})
-```
-Alternatively 
-```javascript
-Sync(function *(){
-	
-	var sync = this
-	this.on('err', function(err){ console.log(err) /*Error out! (plus error stack trace)*/ }) 
-
-	function asyncfunction(){
-		setTimeout(function(){ return sync.throw('Error out!') }, 100)
-	}
-
-	var response = yield asyncfunction()
-	//execution stops here, "err" event listener is executed
-})
-```
-
-As you may have noticed, any error that is an instance of the internal "Error" object in nodejs automatically stops the execution of the next line of code in gen-sync. You can go around this behavior by doing
-
-```javascript
-Sync(function *(){
-	this.on('err', function(err){ console.log(err) /*Error out! (plus error stack trace)*/ }) 
-
-	function asyncfunction(cb){
-		setTimeout(function(){ return cb(Error('Error out!')) }, 100)
+		setTimeout(function(){ return cb(Error('my error!')) }, 100)
 	}
 
 	var response = yield this.sync(asyncfunction, true)
-	//execution continues
+	/*continues*/
 
-	//Do Stuff
+	console.log(response[0]) //my error!
 
-	console.log(response[0]) //'Error out!' (plus error stack trace)
+	//An alternative way of doing the same thing can look like this
+	var response = yield asyncfunction.run()(true)
+	/*continues*/
 
-	//this.err also holds the latest error (if any) in the parent "Sync" scope
-	console.log(this.err) //'Error out!' 
+	console.log(response[0]) //my error!
+})
+```
 
-	//when you continue on an error, the "err" event listener is not executed, if you would like to excute it do
-	this.emit('err', response[0])
+Becarefull if the the error returned is not an instance of the Error class in nodejs, gen-sync wont know an error happened and will continue
+```javascript
+Sync(function *(){
 
-	if(response[0]) yield this.throw(response[0]) //can call this at anytime
-	//execution stops here, "err" event listener is executed 
+	this.on('err', function(err){ console.log(err) }) //wont be triggered
+
+	function asyncfunction(cb){
+		setTimeout(function(){ return cb('my error!') }, 100)
+	}
+
+	var response = yield this.sync(asyncfunction)
+	/*continues*/
+
+	console.log(response[0]) //my error!
+})
+```
+
+Manually handle errors with "Sync.throw" example 1
+```javascript
+Sync(function *(){
+
+	this.on('err', function(err){ console.log(err) //my error! })
+
+	var sync = this
+	function asyncfunction(cb){
+		setTimeout(function(){ return sync.throw('my error!') }, 100)
+	}
+
+	//since the only parameter is the callback and using this.throw
+	var response = yield asyncfunction //this Sync instance exits right here, nothing below this line gets executed
+})
+```
+
+Manually handle errors with "Sync.throw" example 2
+```javascript
+Sync(function *(){
+
+	this.on('err', function(err){ console.log(err) //my error! })
+
+	var sync = this
+	function asyncfunction(cb){
+		setTimeout(function(){ return sync.throw('my error!', true) }, 100)
+	}
+
+	//since the only parameter is the callback and using this.throw
+	var response = yield asyncfunction
+	/*continues*/
+
+	console.log(response[0]) //my error!
 })
 ```
 
