@@ -34,27 +34,29 @@ Function extentions
 
 This package extends the Function object within a process so that shortcuts can be made
 
-## Function.run(arguments)
+### Function.run(arguments)
 returns a configured [function run]
 
   - `arguments`: arguments for the asyncronous function
 
-## [function run] (see examples)
+### [function run] (see examples)
 yield to and execute this function, params can be placed in any order
 
   - `callback`: a function used to determine the target callback in the target asyncronous function (optional)
   - `_continue`:  a boolean to determin if the whole Sync process should exit, default is false. When an error occurs an event is triggered, this is where the error is handled. This is the default behavior in gen-sync, if you'd like to overwrite this behavior, set this parameter to true
   - `context`: this is a class instance used to bind to the target asyncronous function (optional)
 
-### Sync events
-## .on('err', function(err){})
+Sync events
+---
+
+### .on('err', function(err){})
 When an error occurs within an asyncronous function, the process is stopped and an error is emmitted to this event
 
-### async.each events
-## .on('data', function(data, index){})
+## async.each events
+### .on('data', function(data, index){})
 When an asyncronous function results come in, this event is emitted
 
-## .on('end', function(data, index){})
+### .on('end', function(data, index){})
 When all asyncronous functions are complted, this even is emitted
 
 ##
