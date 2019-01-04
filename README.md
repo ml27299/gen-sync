@@ -62,7 +62,7 @@ Sync(function *(){
 	var response2 = yield this.sync(asyncfunction2.run('my response!'))
 	console.log(response2[1]) // my response!
 
-	//OR - didnt need this.cb above because asyncfunction2's last param is the callback
+	//OR - didnt need this.cb above because asyncfunction2's last param is a callback
 	var response2 = yield this.sync(asyncfunction2.run('my response!', this.cb))
 	console.log(response2[1]) // my response!
 
