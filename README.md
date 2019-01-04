@@ -27,7 +27,6 @@ used to manually emit an error (see examples below)
 
 ## next(response)
 used to manually trigger the next yield execution (see examples below)
----
 
 
 Function extentions
