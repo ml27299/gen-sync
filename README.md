@@ -17,6 +17,8 @@ return the response of the asyncronous function
   - `[function gather]`: a function that is executed when the results of one of the async functions returns (optional) 
   - `continue`: a boolean to determin if the whole Sync process should exit, default is false. When an error occurs an event is triggered, this is where the error is handled. This is the default behavior in gen-sync, if you'd like to overwrite this behavior, set this parameter to true
 
+## cb
+A generic callback you can use within this.sync() (see example below)
 
 ### Function extentions
 This package extends the Function object within a process so that shortcuts can be made
@@ -25,7 +27,6 @@ This package extends the Function object within a process so that shortcuts can 
 returns a configured [function exec]
 
   - `arguments`: arguments for the asyncronous function
-
 
 ### Sync events
 ## .on('err', function(err){})
@@ -59,6 +60,10 @@ Sync(function *(){
 	console.log(response1[1]) // my response!
 
 	var response2 = yield this.sync(asyncfunction2.run('my response!'))
+	console.log(response2[1]) // my response!
+
+	//OR - didnt need this.cb above because asyncfunction2's last param is the callback
+	var response2 = yield this.sync(asyncfunction2.run('my response!', this.cb))
 	console.log(response2[1]) // my response!
 
 	//OR

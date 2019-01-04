@@ -1,5 +1,5 @@
 {
-  "name": "@ml27299/gen-sync",
+  "name": "gen-sync",
   "description": "Library that makes simple to run asynchronous functions in synchronous manner, using generators.",
   "version": "1.2.0",
   "url": "https://github.com/ml27299/gen-sync",
@@ -19,6 +19,7 @@
     "yield",
     "runner",
     "thunk",
+    "non blocking",
     "continuable",
     "callback"
   ],
