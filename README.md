@@ -77,7 +77,7 @@ function asyncfunction1(cb){
 
 #### index.js
 ```javascript
-Sync(funciton *(){
+Sync(function *(){
 
 	//since the only argument is the callback, gen-sync will handle it behind the scenes
 	var response = yield asyncfunction1.run()()
@@ -103,7 +103,7 @@ function asyncfunction2(param, cb){
 
 #### index.js
 ```javascript
-Sync(funciton *(){
+Sync(function *(){
 
 	//since the last argument is the callback, gen-sync will handle it behind the scenes
 	var response = yield asyncfunction2.run('my response!')()
@@ -136,7 +136,7 @@ function asyncfunction2(param1, cb, param2){
 
 #### index.js
 ```javascript
-Sync(funciton *(){
+Sync(function *(){
 
 	//the this.cb is utilized in this example, it should be the callback of the async function
 	var some_function = function(){ return 'some value!' }
@@ -182,7 +182,7 @@ Class.prototype.method = function(cb){
 ```
 
 ```javascript
-Sync(funciton *(){
+Sync(function *(){
 
 	//.run messes with inheritance, so pass in the context when needed
 	var c = new Class()
@@ -210,7 +210,7 @@ Sync(funciton *(){
 
 Manually handle async function with "Sync.next"
 ```javascript
-Sync(funciton *(){
+Sync(function *(){
 	
 	var sync = this
 	function asyncfunction(cb){
