@@ -79,8 +79,8 @@ function asyncfunction1(cb){
 ```javascript
 Sync(function *(){
 
-	//since the only argument is the callback, gen-sync will handle it behind the scenes
-	var response = yield asyncfunction1.run()()
+	//the this.cb is utilized in this example, it should be the callback of the async function
+	var response = yield asyncfunction1.run(this.cb)()
 	response = response[1]
 
 	console.log(response) //my response!
@@ -104,15 +104,15 @@ function asyncfunction2(param, cb){
 #### index.js
 ```javascript
 Sync(function *(){
-
-	//since the last argument is the callback, gen-sync will handle it behind the scenes
-	var response = yield asyncfunction2.run('my response!')()
+	
+	//the this.cb is utilized in this example, it should be the callback of the async function
+	var response = yield asyncfunction2.run('my response!', this.cb)()
 	response = response[1]
 
 	console.log(response) //my response!
 	
 
-	//An alternative way of doing the same thing can look like this
+	//An alternative way of doing the same thing can look like this, since the last argument is the callback, gen-sync will handle it behind the scenes
 	var response = yield this.sync(asyncfunction2.run('my response!'))
 	response = response[1]
 
@@ -186,13 +186,13 @@ Sync(function *(){
 
 	//.run messes with inheritance, so pass in the context when needed
 	var c = new Class()
-	var response = yield c.method.run()(c)
+	var response = yield c.method.run(this.cb)(c)
 	response = response[1]
 
 	console.log(response) //bar
 	
 
-	//An alternative way of doing the same thing can look like this
+	//An alternative way of doing the same thing can look like this, since the last argument is the callback, gen-sync will handle it behind the scenes
 	var c = new Class()
 	var response = yield this.sync(c.method.run(), c)
 	response = response[1]
