@@ -4,11 +4,19 @@
   "version": "1.6.3",
   "url": "https://github.com/ml27299/gen-sync",
   "author": "Macario Lara <ml27299@gmail.com>",
-  "main": "lib/Sync",
+  "main": "lib/Sync.js",
   "license": "MIT",
+  "homepage": "https://github.com/ml27299/gen-sync#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/ml27299/gen-sync"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha"
   },
   "keywords": [
     "generator",
@@ -20,6 +28,7 @@
     "runner",
     "thunk",
     "non blocking",
+    "non-blocking",
     "continuable",
     "callback"
   ],
@@ -28,5 +37,9 @@
   },
   "dependencies": {
     "stack-trace": "0.0.9"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
   }
 }
