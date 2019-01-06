@@ -243,7 +243,7 @@ Sync(function *(){
 	}
 
 	//since the only parameter is the callback and using this.throw
-	var response = yield asyncfunction(this.cb) //this Sync instance exits right here, nothing below this line gets executed
+	var response = yield asyncfunction() //this Sync instance exits right here, nothing below this line gets executed
 })
 ```
 
