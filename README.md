@@ -304,7 +304,7 @@ Sync(function *(){
 
 	var ids = [{ _id : 0 }, { _id : 1 }, { _id : 2 }]
 	ids.forEach(function(item){
-		var response = yield asyncfunction(item, this.cb)
+		var response = yield asyncfunction(item, self.cb)
 	})
 })
 ```
