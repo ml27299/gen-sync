@@ -286,7 +286,7 @@ Sync(function *(){
 }, true)
 ```
 
-## Advanced Usage
+## Async Usage
 
 ### Conditional loops
 "Yield" is only available in a generator scope, keep this in mind when using in conjuction with conditional loops
@@ -304,7 +304,7 @@ Sync(function *(){
 
 	var ids = [{ _id : 0 }, { _id : 1 }, { _id : 2 }]
 	ids.forEach(function(item){
-		var response = yield asyncfunction.sync(self).run(null, item)
+		var response = yield asyncfunction(item, this.cb)
 	})
 })
 ```
@@ -320,7 +320,7 @@ Sync(function *(){
 
 	var ids = [{ _id : 0 }, { _id : 1 }, { _id : 2 }]
 	for(var i = 0; i < ids.legth; i++){
-		var response = yield asyncfunction.sync(this).run(null, ids[i])
+		var response = yield asyncfunction(ids[i], this.cb)
 	}
 })
 ```
